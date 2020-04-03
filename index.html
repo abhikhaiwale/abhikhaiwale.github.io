@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body{
+            background-color: #FFFFFF;
+            font-family: Arial, Helvetica, sans-serif;
+            color:black;
+        }
+        #heading{
+            text-align:center;
+            font-weight: bold;
+            color: #343A40;
+            width: 400px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            padding: 4px;
+            margin: 0 auto;
+            text-align: center;
+            box-shadow: 0 20px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+            padding: 10px;
+            background-image: url('https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg?cs=srgb&dl=defocused-image-of-lights-255379.jpg&fm=jpg');
+        }
+        #today{
+            text-align:center;
+            border: 5px solid yellow;
+            background-color: black;
+            color:white;
+            border-radius: 10px;
+            margin: 30px;
+        }
+        #alltime{
+            text-align: center;
+            border: 5px solid yellow;
+            border-radius: 10px;
+            background-color: black;
+            color: white;
+            margin: 30px;
+        }
+        #statewise{
+            border: 5px solid green;
+        }
+        .main{
+            width: 300px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            padding: 4px;
+            margin: 0 auto;
+            text-align: justify;
+            box-shadow: 0 20px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+            padding: 10px;
+            
+        }
+        .main:hover{
+            background-color: royalblue;
+            color: black;
+        }
+        .todaytime{
+            width: 300px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            padding: 8px;
+            margin: 0 auto;
+            text-align: justify;
+            box-shadow: 0 20px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+            padding: 10px;        
+        }
+        .todaytime:hover{
+            background-color: royalblue;
+            color:black;
+        }
+        .one{
+            padding: 3px;
+        }
+        .two{
+            padding: 3px;
+        }
+        .three{
+            display: flex;
+            font-size: 0.8rem;
+            margin-top: 35px;
+        }
+        #statewise{
+            margin-top: 50px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .seven{
+            display: flex;
+            justify-content: space-evenly;
+            border-top: 2px solid black;
+            border-bottom: 2px solid black;
+            list-style-type: none;
+            padding: 8px;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<div class="four">
+    <h1 id="heading"><strong> COVID-19 INDIA</strong></h1>
+    <nav>
+        <ul class="seven">
+            <li><a id="linkone" href="https://abhikhaiwale.github.io/">HOME</a></li>
+            <li><a id="linktwo" href="faq.html">FAQ</a></li>
+        </ul>
+    </nav>
+    <div class="three"><strong><em>Last Updated Today :</em></strong><span id="updatetoday"></span></div>
+    <p>
+    </div>
+        <h2 id="alltime"><strong>ALL TIME</strong></h2>
+<div class="main">
+        <div class="two"><strong>Total Cases In India : </strong><span id="casesindia"></span><br><br></div>
+            <div class="two"><strong>Total Deaths In India : </strong><span id="totaldeaths"></span><br><br></div>
+</div>
+        <h2 id="today"><strong>TODAY</strong></h2>
+<div class="todaytime">
+       <div class="one"> <strong>Total Cases Today:</strong> <span id="casetoday"></span><br><br></div>
+       <div class="one"> <strong>Deaths Today : </strong><span id="deathtoday"></span><br><br></div>
+       <div class="one"><strong>Total Recovered Today:</strong> <span id="recoveredtoday"></span><br><br></div>
+    </div>
+      <h2 id="statewise"> <em>STATE WISE RESULTS COMING SOON</em></h2>
+    </p>
+    <script>
+
+        const api_url = 'https://api.covid19india.org/data.json'
+      
+      async function covd(){
+          const response = await fetch(api_url);
+          const data = await response.json();
+          console.log(data.key_values[0].confirmeddelta);
+          
+
+        document.getElementById("casetoday").textContent = data.key_values[0].confirmeddelta;
+        document.getElementById("updatetoday").textContent = data.key_values[0].lastupdatedtime;
+        document.getElementById("deathtoday").textContent = data.key_values[0].deceaseddelta;
+        document.getElementById("recoveredtoday").textContent = data.key_values[0].recovereddelta;
+        document.getElementById("casesindia").textContent = data.statewise[0].confirmed;
+        document.getElementById("totaldeaths").textContent = data.statewise[0].deaths;
+
+      }
+
+      covd(); 
+
+      setInterval(covd , 1000 * 60 * 60 )
+    </script>
+</body>
+</html>
